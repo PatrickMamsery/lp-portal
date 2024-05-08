@@ -14,6 +14,7 @@ class School extends Model
     protected $fillable = [
         'id',
         'name',
+        'slug',
         'region',
         'district',
         'ward',
@@ -35,6 +36,17 @@ class School extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'school_users', 'school_id', 'user_id');
+    }
+
+    /**
+     * Get the admins of the school. Note that the second argument is the pivot table name.
+     *
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function admins()
+    {
+        return $this->belongsToMany(Admin::class, 'school_admins', 'school_id', 'admin_id');
     }
 
     public function subjects()

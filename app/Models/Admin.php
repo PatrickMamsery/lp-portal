@@ -2,10 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
 use Filament\Panel;
-use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Collection;
 use Filament\Models\Contracts\HasName;
 use Spatie\Permission\Traits\HasRoles;
@@ -15,43 +12,23 @@ use Filament\Models\Contracts\HasTenants;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements HasName, HasTenants
+class Admin extends Authenticatable implements HasName, HasTenants
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
-        'name',
         'fname',
         'mname',
         'lname',
-        'email',
+        'username',
         'phone',
+        'email',
+        'gender',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
     ];
 
     public function getTenants(Panel $panel): array|Collection
@@ -65,7 +42,7 @@ class User extends Authenticatable implements HasName, HasTenants
     }
 
     public function getFullName() {
-        return $this->fname . ' ' . $this->lname;
+        return $this->first_name . ' ' . $this->last_name;
     }
 
     public function getFilamentName(): string
@@ -75,6 +52,6 @@ class User extends Authenticatable implements HasName, HasTenants
 
     public function schools()
     {
-        return $this->belongsToMany(School::class, 'school_users', 'user_id', 'school_id');
+        return $this->belongsToMany(School::class, 'school_admins', 'admin_id', 'school_id');
     }
 }
