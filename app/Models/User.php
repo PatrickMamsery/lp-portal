@@ -70,6 +70,10 @@ class User extends Authenticatable implements HasName, HasTenants
 
     public function getFilamentName(): string
     {
+        if (!$this->fname && !$this->lname && !$this->username) {
+            return $this->getFullName() ?? $this->getAttributeValue('name');
+        }
+
         return $this->getAttributeValue('username');
     }
 
