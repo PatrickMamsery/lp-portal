@@ -70,11 +70,19 @@ class User extends Authenticatable implements HasName, HasTenants
 
     public function getFilamentName(): string
     {
-        if (!$this->fname && !$this->lname && !$this->username) {
-            return $this->getFullName() ?? $this->getAttributeValue('name');
-        }
+        // if (is_null($this->fname) && is_null($this->lname) && is_null($this->username)) {
+        //     return $this->getAttributeValue('email');
+        // } elseif (is_null($this->fname) && is_null($this->lname)) {
+        //     return $this->getAttributeValue('username');
+        // } elseif (is_null($this->fname)) {
+        //     return $this->getAttributeValue('lname');
+        // } elseif (is_null($this->lname)) {
+        //     return $this->getAttributeValue('fname');
+        // } else {
+        //     return $this->getAttributeValue('name');
+        // }
 
-        return $this->getAttributeValue('username');
+        return $this->getAttributeValue('name');
     }
 
     public function schools()

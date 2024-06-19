@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class LessonPlan extends Model
 {
@@ -18,6 +19,9 @@ class LessonPlan extends Model
         'topic_id',
         'subtopic_id',
         'competence_id',
+
+        'logo',
+        'show_logo',
 
         'intro_time',
         'intro_teacher_activities',
@@ -44,6 +48,21 @@ class LessonPlan extends Model
         'conclusion_student_activities',
         'conclusion_assessment',
     ];
+
+    protected $casts = [
+        'show_logo' => 'boolean',
+    ];
+
+    protected $appends = [
+        'logo_url',
+    ];
+
+    protected function logoUrl(): Attribute
+    {
+        return Attribute::get(static function (mixed $value, array $attributes): ?string {
+            return $attributes['logo'] ? asset('images/' . $attributes['logo']) : null;
+        });
+    }
 
     public function school()
     {
