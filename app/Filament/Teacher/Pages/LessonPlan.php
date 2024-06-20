@@ -81,6 +81,7 @@ class LessonPlan extends Page
             ->schema([
                 $this->getGeneralSection(),
                 $this->getLessonDetailsSection(),
+                $this->getLivewireComponentSection()
                 // $this->getTemplateSection(),
             ])
             ->model($this->record)
@@ -149,6 +150,15 @@ class LessonPlan extends Page
                     // ->required()
                     ->relationship('competence', 'content'),
             ])->columns(3);
+    }
+
+    protected function getLivewireComponentSection(): Component
+    {
+        return Section::make('Lesson Development')
+            ->schema([
+                ViewField::make('lesson-development')
+                    ->view('components.school.lessonplan.lesson-dev'),
+            ])->columns(1);
     }
 
     protected function getTemplateSection(): Component
