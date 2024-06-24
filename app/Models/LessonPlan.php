@@ -22,31 +22,6 @@ class LessonPlan extends Model
 
         'logo',
         'show_logo',
-
-        'intro_time',
-        'intro_teacher_activities',
-        'intro_student_activities',
-        'intro_assessment',
-
-        'new_knowledge_time',
-        'new_knowledge_teacher_activities',
-        'new_knowledge_student_activities',
-        'new_knowledge_assessment',
-
-        'reinforcement_time',
-        'reinforcement_teacher_activities',
-        'reinforcement_student_activities',
-        'reinforcement_assessment',
-
-        'reflection_time',
-        'reflection_teacher_activities',
-        'reflection_student_activities',
-        'reflection_assessment',
-
-        'conclusion_time',
-        'conclusion_teacher_activities',
-        'conclusion_student_activities',
-        'conclusion_assessment',
     ];
 
     protected $casts = [
@@ -102,5 +77,10 @@ class LessonPlan extends Model
     public function competence()
     {
         return $this->belongsTo(Competence::class);
+    }
+
+    public function stages()
+    {
+        return $this->hasMany(Stage::class);
     }
 }

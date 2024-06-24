@@ -56,15 +56,15 @@ class LessonPlan extends Page
 
     public function save(): void
     {
-        try {
-            $data = $this->form->getState();
+        // try {
+        //     $data = $this->form->getState();
 
-            $this->handleRecordUpdate($this->record, $data);
-        } catch (Halt $exception) {
-            return;
-        }
+        //     $this->handleRecordUpdate($this->record, $data);
+        // } catch (Halt $exception) {
+        //     return;
+        // }
 
-        $this->getSavedNotification()->send();
+        // $this->getSavedNotification()->send();
     }
 
     protected function getSavedNotification(): Notification
@@ -155,6 +155,7 @@ class LessonPlan extends Page
     protected function getLivewireComponentSection(): Component
     {
         return Section::make('Lesson Development')
+            ->description('Add lesson stages and activities.')
             ->schema([
                 ViewField::make('lesson-development')
                     ->view('components.school.lessonplan.lesson-dev'),
@@ -209,6 +210,7 @@ class LessonPlan extends Page
     {
         return [
             $this->getSaveFormAction(),
+            $this->getDownloadFormAction(),
         ];
     }
 
@@ -218,6 +220,16 @@ class LessonPlan extends Page
             ->label(__('filament-panels::resources/pages/edit-record.form.actions.save.label'))
             ->submit('save')
             ->keyBindings(['mod+s']);
+    }
+
+    protected function getDownloadFormAction(): Action
+    {
+        return Action::make('download')
+            ->label(__('Download'))
+            ->action(function () {
+                // call the download method from the Livewire component
+            })
+            ->keyBindings(['mod+d']);
     }
 
     public static function canView(Model $record): bool
